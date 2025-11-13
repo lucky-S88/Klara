@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    env_file: # This will load variables from backend/.env into the container
+      - ./backend/.env
+    # REMOVE the following 'environment' block or the specific line for VIRUSTOTAL_API_KEY
+    # environment:
+    #   - VIRUSTOTAL_API_KEY=${VIRUSTOTAL_API_KEY} # This line caused the warning
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
